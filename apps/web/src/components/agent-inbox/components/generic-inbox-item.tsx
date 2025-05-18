@@ -117,7 +117,7 @@ export function GenericInboxItem<
           <Button
             size="sm"
             variant="outline"
-            className="flex items-center gap-1 bg-white"
+            className="flex items-center gap-1 bg-background"
             onClick={handleOpenInStudio}
           >
             Studio

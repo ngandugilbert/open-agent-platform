@@ -116,7 +116,7 @@ export default function SigninInterface() {
         </CardHeader>
         <CardContent>
           {message && !isSuccess && (
-            <Alert className="mb-4 bg-blue-50 text-blue-800">
+            <Alert className="mb-4 bg-purple-50 text-purple-800">
               <AlertDescription>{message}</AlertDescription>
             </Alert>
           )}

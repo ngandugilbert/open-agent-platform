@@ -53,7 +53,7 @@ export function InboxItemStatuses({
           status === "busy" && "border-yellow-600 text-yellow-600",
           status === "error" && "border-red-600 text-red-600",
           status === "interrupted" && "border-green-700 text-green-700",
-          status === "human_response_needed" && "border-blue-600 text-blue-600",
+          status === "human_response_needed" && "border-purple-600 text-purple-600",
         )}
       >
         <p className="text-sm">{prettifyText(status)}</p>

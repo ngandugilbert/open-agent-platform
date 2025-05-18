@@ -157,7 +157,7 @@ function renderValue(value: any, isRoot = false): React.ReactNode {
   }
 
   if (typeof value === "number") {
-    return <span className="font-mono text-blue-600">{value}</span>;
+    return <span className="font-mono text-purple-600">{value}</span>;
   }
 
   return <span className="font-mono">{String(value)}</span>;

@@ -101,7 +101,7 @@ export function HumanMessage({
             onSubmit={handleSubmitEdit}
           />
         ) : (
-          <p className="bg-muted ml-auto w-fit rounded-3xl px-4 py-2 whitespace-pre-wrap">
+          <p className="message-bubble human-message-bubble message-appear whitespace-pre-wrap">
             {contentString}
           </p>
         )}

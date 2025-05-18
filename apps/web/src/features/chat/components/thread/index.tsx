@@ -19,7 +19,7 @@ import {
 import { HumanMessage } from "@/features/chat/components/thread/messages/human";
 import { LangGraphLogoSVG } from "@/components/icons/langgraph";
 import { TooltipIconButton } from "@/components/ui/tooltip-icon-button";
-import { ArrowDown, LoaderCircle, SquarePen, AlertCircle } from "lucide-react";
+import { ArrowDown, LoaderCircle, SquarePen, AlertCircle, SendHorizontal } from "lucide-react";
 import { useQueryState, parseAsBoolean } from "nuqs";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { toast } from "sonner";
@@ -152,7 +152,7 @@ function NewThreadButton(props: { hasMessages: boolean }) {
   }
 
   return (
-    <div className="flex rounded-md shadow-xs">
+    <div className="flex rounded-md shadow-sm hover:shadow-md transition-shadow">
       <AgentsCombobox
         agents={agents}
         agentsLoading={loading}
@@ -161,7 +161,7 @@ function NewThreadButton(props: { hasMessages: boolean }) {
         open={open}
         setOpen={setOpen}
         triggerAsChild
-        className="relative min-w-auto shadow-none focus-within:z-10"
+        className="relative min-w-auto shadow-none focus-within:z-10 border-primary/20"
         style={{
           borderTopRightRadius: 0,
           borderBottomRightRadius: 0,
@@ -169,7 +169,7 @@ function NewThreadButton(props: { hasMessages: boolean }) {
         }}
         footer={
           <div className="text-secondary-foreground bg-secondary flex gap-2 p-3 pr-10 pb-3 text-xs">
-            <SquarePen className="size-4 shrink-0" />
+            <SquarePen className="size-4 shrink-0 text-primary" />
             <span className="text-secondary-foreground mb-[1px] text-xs">
               Selecting a different agent will create a new thread.
             </span>
@@ -180,7 +180,7 @@ function NewThreadButton(props: { hasMessages: boolean }) {
       {props.hasMessages && (
         <TooltipIconButton
           size="lg"
-          className="relative size-9 p-4 shadow-none focus-within:z-10"
+          className="relative size-9 p-4 shadow-none focus-within:z-10 border-primary/20 hover:bg-secondary transition-colors"
           tooltip={
             isMac ? "New thread (Cmd+Shift+O)" : "New thread (Ctrl+Shift+O)"
           }
@@ -188,7 +188,7 @@ function NewThreadButton(props: { hasMessages: boolean }) {
           onClick={handleNewThread}
           style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
         >
-          <SquarePen className="size-4" />
+          <SquarePen className="size-4 text-primary" />
         </TooltipIconButton>
       )}
     </div>
@@ -340,11 +340,11 @@ export function Thread() {
       <StickToBottom className="relative flex-1 overflow-hidden">
         <StickyToBottomContent
           className={cn(
-            "absolute inset-0 overflow-y-scroll px-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-transparent",
+            "absolute inset-0 overflow-y-scroll px-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-primary/30 [&::-webkit-scrollbar-track]:bg-transparent",
             !hasMessages && "mt-[25vh] flex flex-col items-stretch",
             hasMessages && "grid grid-rows-[1fr_auto]",
           )}
-          contentClassName="pt-8 pb-16 max-w-3xl mx-auto flex flex-col gap-4 w-full"
+          contentClassName="pt-8 pb-16 max-w-3xl mx-auto flex flex-col gap-6 w-full message-container"
           content={
             <>
               {messages
@@ -386,19 +386,19 @@ export function Thread() {
             </>
           }
           footer={
-            <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
+            <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-background">
               {!hasMessages && (
                 <div className="flex items-center gap-3">
-                  <LangGraphLogoSVG className="h-8 flex-shrink-0" />
-                  <h1 className="text-2xl font-semibold tracking-tight">
-                    Open Agent Platform
+                  <LangGraphLogoSVG className="h-8 flex-shrink-0 text-accent" />
+                  <h1 className="text-2xl font-semibold tracking-tight text-primary">
+                    IntelliChat
                   </h1>
                 </div>
               )}
 
               <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
 
-              <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
+              <div className="bg-card relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border border-primary/20 shadow-lg transition-shadow focus-within:shadow-xl focus-within:border-primary/40">
                 <form
                   onSubmit={handleSubmit}
                   className="mx-auto grid max-w-3xl grid-rows-[1fr_auto] gap-2"
@@ -419,42 +419,47 @@ export function Thread() {
                       }
                     }}
                     placeholder="Type your message..."
-                    className="field-sizing-content resize-none border-none bg-transparent p-3.5 pb-0 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none"
+                    className="field-sizing-content resize-none border-none bg-transparent p-4 pb-2 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none text-base placeholder:text-foreground/40"
                   />
 
-                  <div className="flex items-center justify-between p-2 pt-4">
+                  <div className="flex items-center justify-between p-3 pt-2 border-t border-primary/10">
                     <div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-3">
                         <NewThreadButton hasMessages={hasMessages} />
 
-                        <Switch
-                          id="render-tool-calls"
-                          checked={hideToolCalls ?? false}
-                          onCheckedChange={setHideToolCalls}
-                        />
-                        <Label
-                          htmlFor="render-tool-calls"
-                          className="text-sm text-gray-600"
-                        >
-                          Hide Tool Calls
-                        </Label>
+                        <div className="flex items-center space-x-2 bg-primary/5 px-2 py-1 rounded-lg">
+                          <Switch
+                            id="render-tool-calls"
+                            checked={hideToolCalls ?? false}
+                            onCheckedChange={setHideToolCalls}
+                          />
+                          <Label
+                            htmlFor="render-tool-calls"
+                            className="text-sm text-foreground/80"
+                          >
+                            Hide Tool Calls
+                          </Label>
+                        </div>
                       </div>
                     </div>
                     {stream.isLoading ? (
                       <Button
                         key="stop"
+                        variant="destructive"
                         onClick={() => stream.stop()}
+                        className="shadow-md transition-all px-4 hover:-translate-y-0.5 duration-150 hover:shadow-lg"
                       >
-                        <LoaderCircle className="h-4 w-4 animate-spin" />
+                        <LoaderCircle className="h-4 w-4 animate-spin mr-2" />
                         Cancel
                       </Button>
                     ) : (
                       <Button
                         type="submit"
-                        className="shadow-md transition-all"
+                        className="shadow-md transition-all px-5 hover:shadow-lg"
                         disabled={isLoading || !hasInput}
                       >
-                        Send
+                        <SendHorizontal className="h-4 w-4 mr-2" />
+                        <span>Send</span>
                       </Button>
                     )}
                   </div>

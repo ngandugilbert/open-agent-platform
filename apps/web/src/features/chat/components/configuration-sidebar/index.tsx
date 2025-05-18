@@ -234,15 +234,15 @@ export const ConfigurationSidebar = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "fixed top-0 right-0 z-10 h-screen border-l border-gray-200 bg-white shadow-lg transition-all duration-300",
+        "fixed top-0 right-0 z-10 h-screen border-l border-border bg-card shadow-lg transition-all duration-300",
         open ? "w-80 md:w-xl" : "w-0 overflow-hidden border-l-0",
         className,
       )}
     >
       {open && (
         <div className="flex h-full flex-col">
-          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4">
-            <h2 className="text-lg font-semibold">Agent Configuration</h2>
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-border p-4">
+            <h2 className="text-lg font-semibold text-foreground">Agent Configuration</h2>
             <div className="flex gap-2">
               <TooltipProvider>
                 <Tooltip delayDuration={200}>
@@ -380,17 +380,17 @@ export const ConfigurationSidebar = forwardRef<
                       {agentId &&
                         displayTools.length === 0 &&
                         toolSearchTerm && (
-                          <p className="mt-4 text-center text-sm text-slate-500">
+                          <p className="mt-4 text-center text-sm text-foreground/60">
                             No tools found matching "{toolSearchTerm}".
                           </p>
                         )}
                       {!agentId && (
-                        <p className="mt-4 text-center text-sm text-slate-500">
+                        <p className="mt-4 text-center text-sm text-foreground/60">
                           Select an agent to see tools.
                         </p>
                       )}
                       {agentId && tools.length === 0 && !toolSearchTerm && (
-                        <p className="mt-4 text-center text-sm text-slate-500">
+                        <p className="mt-4 text-center text-sm text-foreground/60">
                           No tools available for this agent.
                         </p>
                       )}

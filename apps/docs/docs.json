@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Open Agent Platform",
   "colors": {
-    "primary": "#0ea5e9",
-    "light": "#38bdf8",
-    "dark": "#0369a1"
+    "primary": "#8b5cf6",
+    "light": "#a78bfa",
+    "dark": "#7c3aed"
   },
   "favicon": "/favicon.ico",
   "navigation": {

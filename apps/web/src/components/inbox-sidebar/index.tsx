@@ -74,7 +74,7 @@ function InboxSidebarInternal() {
 
   return (
     <Sidebar
-      className="border-r-[0px] border-l-[1px] bg-[#F9FAFB]"
+      className="border-r-[0px] border-l-[1px] bg-background"
       side="right"
     >
       <SidebarContent className="flex h-screen flex-col pt-6 pb-9">
@@ -155,7 +155,7 @@ function InboxSidebarInternal() {
                                               }
                                             >
                                               {isDeployed ? (
-                                                <UploadCloud className="h-5 w-5 text-blue-500" />
+                                                <UploadCloud className="h-5 w-5 text-purple-500" />
                                               ) : (
                                                 <House className="h-5 w-5 text-green-500" />
                                               )}

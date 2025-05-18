@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliChat - Tools</title>
+    <style>
+        :root {
+            /* Base colors */
+            --background: #f8fafc;
+            --foreground: #0f172a;
+            
+            /* Card */
+            --card: #ffffff;
+            --card-foreground: #0f172a;
+            
+            /* Primary - Vibrant Blue */
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-foreground: #ffffff;
+            
+            /* Secondary - Soft Gray */
+            --secondary: #f1f5f9;
+            --secondary-hover: #e2e8f0;
+            --secondary-foreground: #334155;
+            
+            /* Accent - Teal */
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
+            --accent-foreground: #ffffff;
+            
+            /* Destructive - Red */
+            --destructive: #ef4444;
+            --destructive-hover: #dc2626;
+            --destructive-foreground: #ffffff;
+            
+            /* Muted */
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            
+            /* Border and inputs */
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: rgba(59, 130, 246, 0.5);
+            
+            /* Radius */
+            --radius: 0.5rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(to bottom, #2563eb, #3b82f6);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .sidebar-nav {
+            padding: 1rem 0;
+            flex: 1;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid white;
+            padding-left: calc(1.5rem - 3px);
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        /* Main content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            height: 64px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            background-color: var(--card);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .breadcrumb {
+            font-weight: 500;
+        }
+        
+        /* Content area */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-description {
+            color: var(--muted-foreground);
+            max-width: 600px;
+        }
+        
+        /* Search and filters */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background-color: var(--card);
+            font-size: 0.875rem;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+        }
+        
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            border: none;
+            gap: 0.5rem;
+        }
+        
+        .button-primary {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+        
+        .button-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .button-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+        }
+        
+        .button-outline:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Tool cards grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .tool-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tool-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-description {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .tool-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+        
+        /* Icons (simplified) */
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">IntelliChat</div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item">
+                <span class="icon">💬</span>
+                Chat
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">🤖</span>
+                Agents
+            </a>
+            <a href="#" class="nav-item active">
+                <span class="icon">🔧</span>
+                Tools
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">🧠</span>
+                RAG
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-avatar">U</div>
+            <div>User Name</div>
+        </div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="main">
+        <header class="header">
+            <div class="breadcrumb">Tools</div>
+        </header>
+        
+        <div class="content">
+            <div class="page-header">
+                <h1 class="page-title">Tools</h1>
+                <p class="page-description">Explore and manage tools that extend your agents' capabilities.</p>
+            </div>
+            
+            <div class="toolbar">
+                <div class="search">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search tools...">
+                </div>
+                <button class="button button-primary">
+                    <span class="icon">+</span>
+                    Add Tool
+                </button>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- Tool Card 1 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🌐</div>
+                        <div class="tool-title">Web Search</div>
+                        <div class="tool-description">
+                            Enables agents to search the web for real-time information and retrieve relevant results.
+                        </div>
+                    </div>
+                    <div class="tool-footer">
+                        <button class="button button-outline">
+                            <span class="icon">🧪</span>
+                            Playground
+                        </button>
+                        <button class="button button-outline">
+                            <span class="icon">👁️</span>
+                            Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 2 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">📊</div>
+                        <div class="tool-title">Data Analysis</div>
+                        <div class="tool-description">
+                            Provides data processing capabilities for analyzing datasets and generating insights.
+                        </div>
+                    </div>
+                    <div class="tool-footer">
+                        <button class="button button-outline">
+                            <span class="icon">🧪</span>
+                            Playground
+                        </button>
+                        <button class="button button-outline">
+                            <span class="icon">👁️</span>
+                            Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 3 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">📝</div>
+                        <div class="tool-title">Document Generator</div>
+                        <div class="tool-description">
+                            Creates formatted documents, reports, and presentations based on provided content.
+                        </div>
+                    </div>
+                    <div class="tool-footer">
+                        <button class="button button-outline">
+                            <span class="icon">🧪</span>
+                            Playground
+                        </button>
+                        <button class="button button-outline">
+                            <span class="icon">👁️</span>
+                            Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tool Card 4 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔄</div>
+                        <div class="tool-title">API Connector</div>
+                        <div class="tool-description">
+                            Connects to external APIs and services to fetch or send data on behalf of agents.
+                        </div>
+                    </div>
+                    <div class="tool-footer">
+                        <button class="button button-outline">
+                            <span class="icon">🧪</span>
+                            Playground
+                        </button>
+                        <button class="button button-outline">
+                            <span class="icon">👁️</span>
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

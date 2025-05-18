@@ -88,8 +88,8 @@ export default function ToolsPlaygroundInterface() {
 
       if (e.code === -32003 && e.data) {
         setAuthRequiredMessage(
-          <div className="flex flex-col items-center justify-center rounded-md border border-blue-200 bg-blue-50 p-6 text-blue-700">
-            <AlertTriangle className="mb-3 h-8 w-8 text-blue-500" />
+          <div className="flex flex-col items-center justify-center rounded-md border border-purple-200 bg-purple-50 p-6 text-purple-700">
+            <AlertTriangle className="mb-3 h-8 w-8 text-purple-500" />
             <p className="mb-1 text-center text-lg font-semibold">
               {e.data?.message?.text}
             </p>

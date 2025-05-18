@@ -35,6 +35,7 @@ function ContentCopyable({
       variant="ghost"
       tooltip="Copy content"
       disabled={disabled}
+      className="hover:bg-secondary/80 transition-colors"
     >
       <AnimatePresence
         mode="wait"
@@ -58,7 +59,7 @@ function ContentCopyable({
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.15 }}
           >
-            <Copy />
+            <Copy className="text-primary" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -81,11 +82,11 @@ export function BranchSwitcher({
   const index = branchOptions.indexOf(branch);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1 bg-secondary/50 rounded-full px-1.5 py-0.5">
       <Button
         variant="ghost"
         size="icon"
-        className="size-6 p-1"
+        className="size-5 p-0.5 hover:bg-secondary/80 text-primary"
         onClick={() => {
           const prevBranch = branchOptions[index - 1];
           if (!prevBranch) return;
@@ -93,15 +94,15 @@ export function BranchSwitcher({
         }}
         disabled={isLoading}
       >
-        <ChevronLeft />
+        <ChevronLeft className="h-3.5 w-3.5" />
       </Button>
-      <span className="text-sm">
-        {index + 1} / {branchOptions.length}
+      <span className="text-xs font-medium text-foreground/70">
+        {index + 1}/{branchOptions.length}
       </span>
       <Button
         variant="ghost"
         size="icon"
-        className="size-6 p-1"
+        className="size-5 p-0.5 hover:bg-secondary/80 text-primary"
         onClick={() => {
           const nextBranch = branchOptions[index + 1];
           if (!nextBranch) return;
@@ -109,7 +110,7 @@ export function BranchSwitcher({
         }}
         disabled={isLoading}
       >
-        <ChevronRight />
+        <ChevronRight className="h-3.5 w-3.5" />
       </Button>
     </div>
   );
@@ -173,16 +174,18 @@ export function CommandBar({
           onClick={() => {
             setIsEditing(false);
           }}
+          className="hover:bg-secondary/80 transition-colors"
         >
-          <XIcon />
+          <XIcon className="text-destructive" />
         </TooltipIconButton>
         <TooltipIconButton
           disabled={isLoading}
           tooltip="Submit"
           variant="secondary"
           onClick={handleSubmitEdit}
+          className="hover:bg-primary/10 text-primary transition-colors"
         >
-          <SendHorizontal />
+          <SendHorizontal className="text-primary" />
         </TooltipIconButton>
       </div>
     );
@@ -200,8 +203,9 @@ export function CommandBar({
           tooltip="Refresh"
           variant="ghost"
           onClick={handleRegenerate}
+          className="hover:bg-secondary/80 transition-colors"
         >
-          <RefreshCcw />
+          <RefreshCcw className="text-primary" />
         </TooltipIconButton>
       )}
       {showEdit && (
@@ -212,8 +216,9 @@ export function CommandBar({
           onClick={() => {
             setIsEditing?.(true);
           }}
+          className="hover:bg-secondary/80 transition-colors"
         >
-          <Pencil />
+          <Pencil className="text-primary" />
         </TooltipIconButton>
       )}
     </div>

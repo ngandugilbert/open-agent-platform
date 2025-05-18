@@ -23,7 +23,7 @@ const renderCollapsedValue = (
     return <span className="text-gray-500">null</span>;
   }
   if (typeof value === "boolean") {
-    return <span className="text-blue-600">{String(value)}</span>;
+    return <span className="text-purple-600">{String(value)}</span>;
   }
   if (typeof value === "number") {
     return <span className="text-green-600">{String(value)}</span>;
@@ -219,7 +219,7 @@ export function GenericInterruptValue({
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
+                        <tbody className="divide-y divide-gray-200 bg-card">
                           {displayEntries.length === 0 && (
                             <tr>
                               <td

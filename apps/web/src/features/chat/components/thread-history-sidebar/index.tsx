@@ -105,15 +105,15 @@ export const ThreadHistorySidebar = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "fixed top-0 right-0 z-10 h-screen border-l border-gray-200 bg-white shadow-lg transition-all duration-300",
+        "fixed top-0 right-0 z-10 h-screen border-l border-border bg-card shadow-lg transition-all duration-300",
         open ? "w-80 md:w-xl" : "w-0 overflow-hidden border-l-0",
         className,
       )}
     >
       {open && (
         <div className="flex h-full flex-col">
-          <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4">
-            <h2 className="text-lg font-semibold">History</h2>
+          <div className="flex flex-shrink-0 items-center justify-between border-b border-border p-4">
+            <h2 className="text-lg font-semibold text-foreground">History</h2>
           </div>
 
           {loading ? (
@@ -133,22 +133,22 @@ export const ThreadHistorySidebar = forwardRef<
                   <div
                     key={thread.thread_id}
                     className={cn(
-                      "flex items-center justify-between p-4 transition-all duration-300 hover:cursor-pointer hover:bg-gray-50",
+                      "flex items-center justify-between p-4 transition-all duration-300 hover:cursor-pointer hover:bg-primary/5",
                       isSelected
-                        ? "bg-gray-100 hover:cursor-default hover:bg-gray-100"
+                        ? "bg-primary/10 hover:cursor-default hover:bg-primary/10"
                         : "",
                     )}
                     onClick={() => handleChangeThread(thread.thread_id)}
                   >
                     <div className="flex items-center gap-2">
-                      <div className="size-2 rounded-full bg-gray-200" />
+                      <div className="size-2 rounded-full bg-primary/40" />
                       <div className="flex flex-col">
                         {/* Use the first human message as the title */}
-                        <p className="line-clamp-1 truncate text-sm font-medium">
+                        <p className="line-clamp-1 truncate text-sm font-medium text-foreground">
                           {getFirstHumanMessageContent(thread) ||
                             thread.thread_id}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-foreground/60">
                           {formatDate(thread.created_at)}
                         </p>
                       </div>

@@ -5,21 +5,24 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-all duration-200 overflow-hidden shadow-sm",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary-hover transform hover:scale-105 transition-transform",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary-hover transform hover:scale-105 transition-transform",
         destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive-hover focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 transform hover:scale-105 transition-transform",
         outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        brand:
-          "border-[#2F6868] bg-[#2F6868]/20 text-[#2F6868] [a&]:hover:bg-[#2F6868]/30",
-        info: "border-blue-500 bg-blue-50 text-blue-500 [a&]:hover:bg-blue-50/90",
+          "border-input text-foreground hover:border-primary hover:text-primary [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+        accent:
+          "border-transparent bg-accent text-accent-foreground [a&]:hover:bg-accent-hover transform hover:scale-105 transition-transform",
+        info:
+          "border-purple-500 bg-purple-50 text-purple-600 [a&]:hover:bg-purple-100 dark:bg-purple-950 dark:text-purple-400 dark:border-purple-800",
+        success:
+          "border-green-500 bg-green-50 text-green-600 [a&]:hover:bg-green-100 dark:bg-green-950 dark:text-green-400 dark:border-green-800",
       },
     },
     defaultVariants: {

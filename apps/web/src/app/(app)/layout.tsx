@@ -5,6 +5,8 @@ import React from "react";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { SidebarLayout } from "@/components/sidebar";
 import { AuthProvider } from "@/providers/Auth";
+import { ThemeProvider } from "@/providers/Theme";
+import { Toaster } from "@/components/ui/sonner";
 import { DOCS_LINK } from "@/constants";
 
 const inter = Inter({
@@ -14,8 +16,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Open Agent Platform",
-  description: "Open Agent Platform by LangChain",
+  title: "IntelliChat",
+  description: "Create personalized AI agents for study assistance",
 };
 
 export default function RootLayout({
@@ -25,7 +27,7 @@ export default function RootLayout({
 }>) {
   const isDemoApp = process.env.NEXT_PUBLIC_DEMO_APP === "true";
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV !== "production" && (
           <script
@@ -36,11 +38,11 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {isDemoApp && (
-          <div className="fixed top-0 right-0 left-0 z-10 bg-[#CFC8FE] py-2 text-center text-black shadow-md">
-            You're currently using the demo application. To use your own agents,
+          <div className="fixed top-0 right-0 left-0 z-10 bg-gradient-to-r from-purple-600 via-violet-500 to-amber-400 py-2 text-center text-white shadow-md">
+            You're currently using the IntelliChat demo application. To use your own agents,
             and run in production, check out the{" "}
             <a
-              className="underline underline-offset-2"
+              className="font-medium underline underline-offset-2"
               href={DOCS_LINK}
               target="_blank"
               rel="noopener noreferrer"
@@ -49,11 +51,19 @@ export default function RootLayout({
             </a>
           </div>
         )}
-        <NuqsAdapter>
-          <AuthProvider>
-            <SidebarLayout>{children}</SidebarLayout>
-          </AuthProvider>
-        </NuqsAdapter>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NuqsAdapter>
+            <AuthProvider>
+              <SidebarLayout>{children}</SidebarLayout>
+            </AuthProvider>
+          </NuqsAdapter>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

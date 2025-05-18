@@ -164,7 +164,7 @@ export function ConfigField({
       </div>
 
       {description && (
-        <p className="text-xs whitespace-pre-line text-gray-500">
+        <p className="text-xs whitespace-pre-line text-foreground/60">
           {description}
         </p>
       )}
@@ -216,8 +216,8 @@ export function ConfigField({
       {type === "slider" && (
         <div className="pt-2">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs text-gray-500">{min ?? ""}</span>
-            <span className="text-sm font-medium">
+            <span className="text-xs text-foreground/60">{min ?? ""}</span>
+            <span className="text-sm font-medium text-primary">
               {/* Use currentValue */}
               {currentValue !== undefined
                 ? currentValue
@@ -225,7 +225,7 @@ export function ConfigField({
                   ? (min + max) / 2
                   : ""}
             </span>
-            <span className="text-xs text-gray-500">{max ?? ""}</span>
+            <span className="text-xs text-foreground/60">{max ?? ""}</span>
           </div>
           <Slider
             id={id}
@@ -403,7 +403,7 @@ export function ConfigFieldTool({
       </div>
 
       {description && (
-        <p className="text-xs whitespace-pre-line text-gray-500">
+        <p className="text-xs whitespace-pre-line text-foreground/60">
           {description}
         </p>
       )}
@@ -620,7 +620,7 @@ export function ConfigFieldAgents({
         className="w-full"
       />
 
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-foreground/60">
         The agents to make available to this supervisor.
       </p>
     </div>
